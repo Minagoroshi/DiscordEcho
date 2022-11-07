@@ -40,6 +40,7 @@ func main() {
 		pSession.Close()
 	}()
 	voice.VConnLogger.Log("Connected to Discord", nil)
+	SpoofStream(pConn)
 	go echo(pConn)
 
 	/*	This is the code for the relay bot
@@ -68,7 +69,6 @@ func echo(conn *discordgo.VoiceConnection) {
 
 	conn.Speaking(true)
 	defer conn.Speaking(false)
-	SpoofStream(conn)
 	for {
 		packet, ok := <-receiveChan
 		if !ok {
