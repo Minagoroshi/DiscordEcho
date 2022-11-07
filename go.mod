@@ -3,7 +3,7 @@ module DiscordEcho
 go 1.19
 
 require (
-	github.com/Minagoroshi/discordgopluscamera v0.0.0-20221107014753-bb8744e24f11
+	github.com/Minagoroshi/discordgopluscamera v0.0.0-20221107041626-eb073fa25b1e
 	layeh.com/gopus v0.0.0-20210501142526-1ee02d434e32
 )
 

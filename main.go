@@ -40,6 +40,7 @@ func main() {
 		pSession.Close()
 	}()
 	voice.VConnLogger.Log("Connected to Discord", nil)
+	SpoofStream(pConn)
 	go echo(pConn)
 
 	/*	This is the code for the relay bot
@@ -59,6 +60,7 @@ func main() {
 }
 
 func echo(conn *discordgo.VoiceConnection) {
+
 	receiveChan := make(chan *discordgo.Packet, 2)
 	go voice.ReceivePCM(conn, receiveChan)
 
@@ -138,4 +140,31 @@ func connect(authorization, gid, cid string) (*discordgo.VoiceConnection, *disco
 	}
 
 	return vConn, discord
+}
+
+func SpoofStream(conn *discordgo.VoiceConnection) {
+	data := voice.VoiceChannelJoinOp{18, voice.StreamConnect{
+		Type:            "guild",
+		GuildId:         "997653892856815686",
+		ChannelId:       "1025646630315249696",
+		PreferredRegion: "us-east",
+	}}
+	conn.Session.WsMutex.Lock()
+	err := conn.Session.WsConn.WriteJSON(data)
+	if err != nil {
+		log.Fatal(err)
+	}
+	conn.Session.WsMutex.Unlock()
+
+	data = voice.VoiceChannelJoinOp{22, voice.StreamStart{
+		StreamKey: "guild:997653892856815686:1025646630315249696:1006308267292635297",
+		Paused:    false,
+	}}
+	conn.Session.WsMutex.Lock()
+	err = conn.Session.WsConn.WriteJSON(data)
+	if err != nil {
+		log.Fatal(err)
+	}
+	conn.Session.WsMutex.Unlock()
+
 }

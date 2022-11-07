@@ -1,5 +1,11 @@
 github.com/Minagoroshi/discordgopluscamera v0.0.0-20221107014753-bb8744e24f11 h1:b0glEu3dfrzBaxWH8e089nfM0v7Q1gRri3kDEUIEiLQ=
 github.com/Minagoroshi/discordgopluscamera v0.0.0-20221107014753-bb8744e24f11/go.mod h1:ItXiGvlCI588tU/P2qCm8OEts9v1tSsuJ/NeVIWFtac=
+github.com/Minagoroshi/discordgopluscamera v0.0.0-20221107040054-988153fe78e6 h1:UtZVqkWGFJ9FmABsDoCzcRgyR0gDsUDXDlPrs0ZOEVU=
+github.com/Minagoroshi/discordgopluscamera v0.0.0-20221107040054-988153fe78e6/go.mod h1:ItXiGvlCI588tU/P2qCm8OEts9v1tSsuJ/NeVIWFtac=
+github.com/Minagoroshi/discordgopluscamera v0.0.0-20221107041430-60417d8cb192 h1:5RbTa1GgWnvlJpYfMFOdyXZsoDdY6hyrWQg8c02B3TE=
+github.com/Minagoroshi/discordgopluscamera v0.0.0-20221107041430-60417d8cb192/go.mod h1:ItXiGvlCI588tU/P2qCm8OEts9v1tSsuJ/NeVIWFtac=
+github.com/Minagoroshi/discordgopluscamera v0.0.0-20221107041626-eb073fa25b1e h1:zBbcrUOA9w7ymifd435UJr4qrhgkjItycS7m6rcE5g8=
+github.com/Minagoroshi/discordgopluscamera v0.0.0-20221107041626-eb073fa25b1e/go.mod h1:ItXiGvlCI588tU/P2qCm8OEts9v1tSsuJ/NeVIWFtac=
 github.com/bwmarrin/discordgo v0.26.1 h1:AIrM+g3cl+iYBr4yBxCBp9tD9jR3K7upEjl0d89FRkE=
 github.com/bwmarrin/discordgo v0.26.1/go.mod h1:NJZpH+1AfhIcyQsPeuBKsUtYrRnjkyu0kIVMCHkZtRY=
 github.com/gorilla/websocket v1.4.2 h1:+/TMaTYc4QFitKJxsQ7Yye35DkWvkdLcvGKqM+x0Ufc=
