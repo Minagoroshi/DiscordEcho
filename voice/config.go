@@ -2,7 +2,6 @@ package discordvoicego
 
 import (
 	"layeh.com/gopus"
-	"sync"
 )
 
 const (
@@ -20,5 +19,4 @@ const (
 var (
 	speakers map[uint32]*gopus.Decoder
 	encoder  *gopus.Encoder
-	mutex    sync.Mutex
 )
