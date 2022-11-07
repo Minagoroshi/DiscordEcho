@@ -11,14 +11,14 @@ const (
 )
 
 const (
-	CHANNELS  int = STEREO              // 1 for mono, 2 for stereo
-	FRAMERATE int = 48000               // audio sampling rate
-	FRAMESIZE int = 960                 // uint16 size of each audio frame
-	MAXBYTES  int = (FRAMESIZE * 2) * 2 // max size of opus data
+	CHANNELS  int = STEREO // dual channel
+	FRAMERATE int = 48000  // 48kHz
+	FRAMESIZE int = 960
+	MAXBYTES  int = (FRAMESIZE * 2) * 2
 )
 
 var (
-	speakers    map[uint32]*gopus.Decoder
-	opusEncoder *gopus.Encoder
-	mutex       sync.Mutex
+	speakers map[uint32]*gopus.Decoder
+	encoder  *gopus.Encoder
+	mutex    sync.Mutex
 )

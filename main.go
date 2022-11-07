@@ -59,43 +59,42 @@ func main() {
 }
 
 func echo(conn *discordgo.VoiceConnection) {
-	recv := make(chan *discordgo.Packet, 2)
-	go voice.ReceivePCM(conn, recv)
+	receiveChan := make(chan *discordgo.Packet, 2)
+	go voice.ReceivePCM(conn, receiveChan)
 
-	send := make(chan []int16, 2)
-	go voice.SendPCM(conn, send)
+	sendChan := make(chan []int16, 2)
+	go voice.SendPCM(conn, sendChan)
 
 	conn.Speaking(true)
 	defer conn.Speaking(false)
 	for {
-
-		p, ok := <-recv
+		packet, ok := <-receiveChan
 		if !ok {
+			voice.VConnLogger.Log("Receive channel closed", nil)
 			return
 		}
 
-		send <- p.PCM
+		sendChan <- packet.PCM
 	}
 }
 
-// Takes inbound audio and sends it right back out.
-func relay(player, listener *discordgo.VoiceConnection) {
-	recv := make(chan *discordgo.Packet, 2)
-	go voice.ReceivePCM(listener, recv)
+func relay(listener, player *discordgo.VoiceConnection) {
+	receiveChan := make(chan *discordgo.Packet, 2)
+	go voice.ReceivePCM(listener, receiveChan)
 
-	send := make(chan []int16, 2)
-	go voice.SendPCM(player, send)
+	sendChan := make(chan []int16, 2)
+	go voice.SendPCM(player, sendChan)
 
 	player.Speaking(true)
 	defer player.Speaking(false)
 	for {
-
-		p, ok := <-recv
+		packet, ok := <-receiveChan
 		if !ok {
+			voice.VConnLogger.Log("Receive channel closed", nil)
 			return
 		}
 
-		send <- p.PCM
+		sendChan <- packet.PCM
 	}
 }
 

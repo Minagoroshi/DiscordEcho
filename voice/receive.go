@@ -10,21 +10,23 @@ import (
 
 // ReceivePCM recieves from the discordgo.VoiceConnection.OpusRecv channel.
 // It then decodes the Opus data into PCM and sends it to the provided channel.
-func ReceivePCM(v *discordgo.VoiceConnection, c chan *discordgo.Packet) {
-	if c == nil {
+func ReceivePCM(vConn *discordgo.VoiceConnection, packetChannel chan *discordgo.Packet) {
+	var err error
+
+	if packetChannel == nil { // if the channel is nil, return
+		VConnLogger.Log("Packet Channel is nil", nil)
 		return
 	}
 
-	var err error
-
 	for {
-		if v.Ready == false || v.OpusRecv == nil {
-			VConnLogger.Log(fmt.Sprintf("Not Ready to receive %+v : %+v", v.Ready, v.OpusSend), errors.New("Discordgo not ready to receive opus packets. Exitting Application"))
-			log.Fatalf("Discordgo not ready to receive opus packets. %+v : %+v,  Exitting Application \n", v.Ready, v.OpusSend)
+		if vConn.Ready == false || vConn.OpusRecv == nil {
+			VConnLogger.Log(fmt.Sprintf("Not Ready to receive %+vConn : %+vConn", vConn.Ready, vConn.OpusSend), errors.New("Discordgo not ready to receive opus packets. Exitting Application"))
+			log.Fatalf("Discordgo not ready to receive opus packets. %+vConn : %+vConn,  Exitting Application \n", vConn.Ready, vConn.OpusSend)
 		}
 
-		p, ok := <-v.OpusRecv
+		packet, ok := <-vConn.OpusRecv
 		if !ok {
+			VConnLogger.Log("OpusRecv channel closed", nil)
 			return
 		}
 
@@ -32,21 +34,21 @@ func ReceivePCM(v *discordgo.VoiceConnection, c chan *discordgo.Packet) {
 			speakers = make(map[uint32]*gopus.Decoder)
 		}
 
-		_, ok = speakers[p.SSRC]
+		_, ok = speakers[packet.SSRC]
 		if !ok {
-			speakers[p.SSRC], err = gopus.NewDecoder(48000, 2)
+			speakers[packet.SSRC], err = gopus.NewDecoder(48000, 2)
 			if err != nil {
 				VConnLogger.Log("error creating opus decoder", err)
 				continue
 			}
 		}
 
-		p.PCM, err = speakers[p.SSRC].Decode(p.Opus, 960, false)
+		packet.PCM, err = speakers[packet.SSRC].Decode(packet.Opus, 960, false)
 		if err != nil {
 			VConnLogger.Log("Error decoding opus data", err)
 			continue
 		}
 
-		c <- p
+		packetChannel <- packet
 	}
 }
