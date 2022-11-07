@@ -18,6 +18,8 @@ Comes with built in CLI Prompts if flag data is not provided. Flag data is not r
 
 ## Credits: 
 
-https://discord.com/developers/docs/topics/opcodes-and-status-codes
+Discord: https://discord.com/developers/docs/topics/opcodes-and-status-codes
 
-https://github.com/bwmarrin/discordgo
+DiscordGo: https://github.com/bwmarrin/discordgo
+
+Myself (DiscordGO Camera Edits): https://github.com/Minagoroshi/discordgopluscamera
