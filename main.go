@@ -145,8 +145,8 @@ func connect(authorization, gid, cid string) (*discordgo.VoiceConnection, *disco
 func SpoofStream(conn *discordgo.VoiceConnection) {
 	data := voice.VoiceChannelJoinOp{18, voice.StreamConnect{
 		Type:            "guild",
-		GuildId:         "997653892856815686",
-		ChannelId:       "1025646630315249696",
+		GuildId:         conn.GuildID,
+		ChannelId:       conn.ChannelID,
 		PreferredRegion: "us-east",
 	}}
 	conn.Session.WsMutex.Lock()
@@ -156,8 +156,9 @@ func SpoofStream(conn *discordgo.VoiceConnection) {
 	}
 	conn.Session.WsMutex.Unlock()
 
+	streamkey := "guild:" + conn.GuildID + ":" + conn.ChannelID + ":" + conn.UserID // This is the stream key
 	data = voice.VoiceChannelJoinOp{22, voice.StreamStart{
-		StreamKey: "guild:997653892856815686:1025646630315249696:1006308267292635297",
+		StreamKey: streamkey,
 		Paused:    false,
 	}}
 	conn.Session.WsMutex.Lock()
